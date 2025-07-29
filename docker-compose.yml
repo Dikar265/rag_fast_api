@@ -1,0 +1,44 @@
+version: "3.9"
+
+services:
+  db:
+    image: ankane/pgvector:latest
+    container_name: postgres_rag
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ragdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init_db:/docker-entrypoint-initdb.d
+    ports:
+      - "5433:5432"
+
+  web:
+    build: .
+    container_name: fastapi_rag
+    restart: always
+    depends_on:
+      - db
+    environment:
+      URL_DATABASE: postgresql+psycopg2://postgres:postgres@db:5432/ragdb
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin_rag
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
