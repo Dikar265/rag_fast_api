@@ -5,6 +5,11 @@ from utils.embeddings import generate_embedding
 from sqlalchemy import text, bindparam
 from pgvector.sqlalchemy import Vector
 import ollama
+import os
+
+OLLAMA_HOST = os.getenv("OLLAMA_HOST")
+
+ollama_client = ollama.Client(host=OLLAMA_HOST)
 
 router = APIRouter(
     prefix="/query",
@@ -38,7 +43,7 @@ async def ask_question(disease_id: int, question: str, db: Session = Depends(get
     Respuesta:
     """
 
-    response = ollama.chat(
+    response = ollama_client.chat(
         model="mistral",
         messages=[
         {"role": "user", "content": prompt}

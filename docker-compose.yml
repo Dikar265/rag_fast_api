@@ -1,6 +1,15 @@
-version: "3.9"
-
 services:
+  ollama:
+    build:
+      context: .
+      dockerfile: Dockerfile.ollama
+    container_name: ollama_rag
+    ports:
+      - "11434:8080"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
+
   db:
     image: ankane/pgvector:latest
     container_name: postgres_rag
@@ -21,6 +30,7 @@ services:
     restart: always
     depends_on:
       - db
+      - ollama
     environment:
       URL_DATABASE: postgresql+psycopg2://postgres:postgres@db:5432/ragdb
     ports:
@@ -42,3 +52,4 @@ services:
 
 volumes:
   postgres_data:
+  ollama_data:

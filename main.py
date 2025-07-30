@@ -11,5 +11,5 @@ with engine.connect() as conn:
     
 Base.metadata.create_all(bind=engine)
 
+app.include_router(query.router)
 app.include_router(upload.router)
-app.include_router(query.router)  
