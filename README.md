@@ -15,7 +15,7 @@ git clone https://github.com/Dikar265/rag_fast_api.git
 cd rag_fast_api
 
 # 2. Create .env file
-echo "URL_DATABASE=postgresql+psycopg2://postgres:password@db:5432/rag
+echo "URL_DATABASE=postgresql+psycopg2:dsadsa//postgres:postgres@db:5432/ragdb
 OLLAMA_HOST=http://ollama:11434" > .env
 
 # 3. Run with Docker
