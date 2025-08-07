@@ -36,11 +36,11 @@ async def ask_question(disease_id: int, question: str, db: Session = Depends(get
     context = "\n".join([row[0] for row in result])
 
     prompt = f"""
-    Usa la siguiente información como contexto para responder la pregunta.
-    Contexto: {context}
-    Pregunta: {question}
+    Use the following information as context to answer the question.
+    Context: {context}
+    Question: {question}
 
-    Respuesta:
+    Answer:
     """
 
     response = ollama_client.chat(

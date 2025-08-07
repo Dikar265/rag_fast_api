@@ -22,6 +22,14 @@ for MODEL in $MODELS; do
   fi
 done
 
+if command -v nvidia-smi &> /dev/null; then
+  echo "✅ GPU detected, enabling acceleration"
+  export OLLAMA_GPU=1
+else
+  echo "⚙️ No GPU found, running on CPU"
+  export OLLAMA_GPU=0
+fi
+
 # set container as ready
 touch /tmp/ready
 
