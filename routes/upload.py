@@ -87,7 +87,7 @@ async def update_pdf(
         "message": "PDF updated successfully",
         "id": pdf.id,
         "name": pdf.name,
-        "chunks_guardados": len(chunks)
+        "saved_chunks": len(chunks)
     }
 
 @router.delete("/{pdf_id}/")
